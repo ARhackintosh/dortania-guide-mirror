@@ -11,38 +11,15 @@ jobs:
     name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - name: Checkout Repository
         uses: actions/checkout@v3
         # with:
         #   persist-credentials: false
-      - name: Install
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Include _headers file
-        run: cp _headers .vuepress/dist/_headers
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@1
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ID }}
           projectName: ${{ secrets.CLOUDFLARE_PROJECT_NAME }}
-          directory: .vuepress/dist/
+          directory: ./
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Install
-        run: npm ci
-      - name: Lint
-        run: npm run lint-ci
