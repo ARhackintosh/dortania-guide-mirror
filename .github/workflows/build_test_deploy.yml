@@ -22,6 +22,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Include _headers file
+        run: cp _headers .vuepress/dist/_headers
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@1
         with:
